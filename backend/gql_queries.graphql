@@ -1,0 +1,120 @@
+mutation {
+	createEmployee(
+		employee: {
+			_id: "BK0001"
+			did: "admin"
+			job_id: "DEV0001"
+			first_name: "MK"
+			last_name: "Az"
+			mobile: "564564564"
+			email: "any@mail.com"
+			address: "house:sds"
+			joining_date: "date here"
+			password: "designer"
+		}
+	)
+}
+
+mutation {
+	createJob(
+		job: {
+			_id: "DEV0002"
+			title: "dev"
+			pay: 100000
+			start_time: "9:00"
+			exit_time: "6:00"
+			late_charges: 200
+			abs_charges: 1000
+		}
+	)
+}
+
+mutation {
+	createProject(
+		project: {
+			_id: "DES22798"
+			title: "sample"
+			posted_date: 1596503160
+			deadline: 1596672000
+			leading_member: "MK0001"
+			other_members: ["BK0001", "BU0002", "NE0004"]
+		}
+	)
+}
+
+query {
+	readJobs {
+		_id
+		title
+		pay
+		start_time
+		exit_time
+		late_charges
+		abs_charges
+		fixed_allowances {
+			title
+			month
+			amount
+		}
+	}
+}
+
+query {
+	readEmployees {
+		_id
+		job_id
+		first_name
+		last_name
+		mobile
+		email
+		address
+		joining_date
+		password
+	}
+}
+
+query {
+	readProjects {
+		_id
+		title
+		posted_date
+		deadline
+		leading_member
+		other_members
+		completed
+		tasks {
+			member_id
+			task
+			deadline
+			completed
+		}
+	}
+}
+
+query {
+	readDailyAtd {
+		employee_id
+		job_id
+		date
+		entry_time
+		present
+		leave
+		penalty
+	}
+}
+
+query {
+	readMonthlyAtd(month: 8, year: 2020) {
+		employee_id
+		job_id
+		date
+		entry_time
+		present
+		leave
+		penalty
+	}
+}
+
+mutation {
+	markLeave(id: "HF74541")
+}
