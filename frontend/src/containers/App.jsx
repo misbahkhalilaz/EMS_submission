@@ -23,9 +23,14 @@ function App(props) {
 							eventDate
 						}
 					}`,
-		}).then((bc) => props.gotBroadcasts(bc.data.readBroadcast));
+		}).then((bc) => {
+			if (bc.data) {
+				props.gotBroadcasts(bc.data.readBroadcast);
+			}
+		});
 
 	useEffect(() => {
+		socket.emit("join", "broadcast");
 		rcvBroadcasts();
 		socket.on("rcv_broadcast", () => {
 			rcvBroadcasts();
