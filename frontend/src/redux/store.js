@@ -20,6 +20,7 @@ const initState = {
 	currentSalary: [],
 	bio: {},
 	job: {},
+	broadcasts: [],
 };
 
 const store = createStore(reducer, initState, applyMiddleware(logger));

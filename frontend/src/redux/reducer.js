@@ -10,6 +10,7 @@ import {
 	GOT_CURRENT_SALARIES,
 	GOT_BIO,
 	GOT_JOB,
+	GOT_BROADCASTS,
 } from "./actionTypes";
 
 export default function reducer(state, action) {
@@ -50,6 +51,9 @@ export default function reducer(state, action) {
 
 		case GOT_JOB:
 			return Object.assign({}, state, { job: action.payload });
+
+		case GOT_BROADCASTS:
+			return Object.assign({}, state, { broadcasts: action.payload.reverse() });
 
 		default:
 			return state;

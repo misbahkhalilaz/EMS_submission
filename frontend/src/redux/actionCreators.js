@@ -10,6 +10,7 @@ import {
 	GOT_CURRENT_SALARIES,
 	GOT_BIO,
 	GOT_JOB,
+	GOT_BROADCASTS,
 } from "./actionTypes";
 
 export const changeIsFetching = () => ({
@@ -64,4 +65,9 @@ export const gotBio = (bio) => ({
 export const gotJob = (job) => ({
 	type: GOT_JOB,
 	payload: job,
+});
+
+export const gotBroadcasts = (broadcasts) => ({
+	type: GOT_BROADCASTS,
+	payload: broadcasts,
 });

@@ -9,3 +9,4 @@ export const GOT_MONTHLY_ATD = "gotMonthlyAtd";
 export const GOT_CURRENT_SALARIES = "gotCurrentSalaries";
 export const GOT_BIO = "gotBio";
 export const GOT_JOB = "gotJob";
+export const GOT_BROADCASTS = "gotBroadcasts";
