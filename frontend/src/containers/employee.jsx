@@ -11,31 +11,8 @@ import EmployeeProjectTab from "../views/employee-projects";
 import EmployeeContactTab from "../views/employee-contact-admin";
 
 function Employee() {
-	var msgs = [
-		{
-			type: "Broadcast",
-			msg: "dgadajdgajhgdjsadhgsjdgjhadjhdgasjdgjsagdhasgdjhsadgas",
-			eventDate: "23/10/2020",
-		},
-
-		{
-			type: "Broadcast",
-			msg: "dgadajdgajhgdjsadhgsjdgjhadjhdgasjdgjsagdhasgdjhsadgas",
-			eventDate: "23/12/2020",
-		},
-
-		{
-			type: "Broadcast",
-			msg: "dgadajdgajhgdjsadhgsjdgjhadjhdgasjdgjsagdhasgdjhsadgas",
-			eventDate: "21/13/2020",
-		},
-		{
-			type: "Broadcast",
-			msg: "dgadajdgajhgdjsadhgsjdgjhadjhdgasjdgjsagdhasgdjhsadgas",
-			eventDate: "2/13/2020",
-		},
-	];
-
+	console.log(parseInt(new Date(Date.now()).getTime() / 1000 + 5 * 3600));
+	console.log(new Date(1597005599 * 1000));
 	return (
 		<>
 			<Row style={{ backgroundColor: "#f2f2f0" }}>
@@ -44,7 +21,7 @@ function Employee() {
 						<Bio />
 					</Row>
 					<Row>
-						<BroadcastPanel Msgs={msgs} />
+						<BroadcastPanel />
 					</Row>
 				</Col>
 				<Router>

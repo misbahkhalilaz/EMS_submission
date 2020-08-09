@@ -14,7 +14,7 @@ const initState = {
 	},
 	jobs: [],
 	employees: [],
-	projects: [],
+	projects: [""],
 	dailyAtd: [],
 	monthlyAtd: [],
 	currentSalary: [],
