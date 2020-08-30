@@ -11,3 +11,4 @@ export const GOT_BIO = "gotBio";
 export const GOT_JOB = "gotJob";
 export const GOT_BROADCASTS = "gotBroadcasts";
 export const CLEAR_STORE = "clearStore";
+export const ADD_PROJ_CHAT = "addProjChat";

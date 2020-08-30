@@ -12,7 +12,9 @@ import {
 	GOT_JOB,
 	GOT_BROADCASTS,
 	CLEAR_STORE,
+	ADD_PROJ_CHAT,
 } from "./actionTypes";
+// import store from "./store";
 
 export const changeIsFetching = () => ({
 	type: CHANGE_IS_FETCHING,
@@ -74,3 +76,10 @@ export const gotBroadcasts = (broadcasts) => ({
 });
 
 export const clearStore = () => ({ type: CLEAR_STORE });
+
+export const addProjChat = (_id, msg) => {
+	return {
+		type: ADD_PROJ_CHAT,
+		payload: { _id, message: msg },
+	};
+};

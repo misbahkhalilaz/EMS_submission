@@ -9,10 +9,16 @@ import EmployeeDashboard from "../views/employee-dashboard";
 import EmployeeSalaryAttendanceTab from "../views/employee-salary-attendance";
 import EmployeeProjectTab from "../views/employee-projects";
 import EmployeeContactTab from "../views/employee-contact-admin";
-import { gotEmployees } from "../redux/actionCreators";
+import {
+	gotEmployees,
+	addProjChat,
+	gotProjects,
+} from "../redux/actionCreators";
 import { connect } from "react-redux";
 import callAPI from "../components/callAPI";
 import { useCookies } from "react-cookie";
+import { socket } from "./App";
+import { getProjects } from "../components/employee-components/project-chart-panel";
 
 function Employee(props) {
 	console.log(parseInt(new Date(Date.now()).getTime() / 1000 + 5 * 3600));
@@ -32,7 +38,18 @@ function Employee(props) {
 
 	useEffect(() => {
 		getEmployees();
+		socket.on("rcv_msg", (room, msg) =>
+			getProjects(cookies.session).then((res) =>
+				props.gotProjects(res.data.readProjEmp)
+			)
+		);
 	}, []);
+
+	useEffect(() => {
+		props.projects.forEach((project) => socket.emit("join", project._id));
+		return () =>
+			props.projects.forEach((project) => socket.emit("leave", project._id));
+	}, [props.projects]);
 
 	return (
 		<>
@@ -72,4 +89,12 @@ function Employee(props) {
 	);
 }
 
-export default connect(null, { gotEmployees })(Employee);
+const mapStateToProps = (state, ownProps) => ({
+	projects: state.projects,
+});
+
+export default connect(mapStateToProps, {
+	gotEmployees,
+	addProjChat,
+	gotProjects,
+})(Employee);

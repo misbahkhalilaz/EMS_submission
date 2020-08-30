@@ -1,129 +1,127 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Message, ChatFeed } from "react-chat-ui";
 import { Tooltip, Input } from "antd";
 import { Scrollbars } from "react-custom-scrollbars";
+import { socket } from "../../containers/App";
+import { connect } from "react-redux";
+import { addProjChat } from "../../redux/actionCreators";
 
 const Chat = (props) => {
-  const [messages, setMessages] = useState(
-    [
-      new Message({
-        id: "x",
-        message: (
-          <Tooltip title="im time">
-            "I'm the recipient! (The person you're talking to)"
-          </Tooltip>
-        ),
-        senderName: "ali",
-      }), // Gray bubble
+	const msgEnd = React.createRef();
+	const [msgInput, setMsgInput] = useState("");
+	const [ph, setPh] = useState("type message...");
+	const [prevId, setPrevId] = useState(props.proj_id);
+	let [messages, setMessages] = useState([]);
 
-      new Message({
-        id: "x",
-        message: <Tooltip title="im time">"Im 3rd"</Tooltip>,
-        senderName: "subhan",
-      }),
-      new Message({
-        id: "jk",
-        message: <Tooltip title="im time">"Im 3rd"</Tooltip>,
-        senderName: "subhan",
-      }),
-      new Message({
-        id: 0,
-        message: (
-          <Tooltip title="im time">"I'm you -- the blue bubble!"</Tooltip>
-        ),
-        senderName: "mk",
-      }), // Blue bubble
-      new Message({
-        id: "x",
-        message: (
-          <Tooltip title="im time">
-            "I'm the recipient! (The person you're talking to)"
-          </Tooltip>
-        ),
-        senderName: "ali",
-      }), // Gray bubble
+	useEffect(() => {
+		setMessages(
+			props.projects.filter((proj) => proj._id === props.proj_id)[0]
+				? props.projects
+						.filter((proj) => proj._id === props.proj_id)[0]
+						.chat.map(
+							(msg) =>
+								new Message({
+									id: msg.sender_id === props.myId ? 0 : msg.sender_id,
+									message: (
+										<Tooltip
+											title={new Date(msg.timestamp * 1000).toLocaleString()}
+										>
+											{msg.message}
+										</Tooltip>
+									),
+									sender: msg.sender_name,
+								})
+						)
+				: []
+		);
+		console.log(messages);
+	}, [props.proj_id, props.projects]);
 
-      new Message({
-        id: "x",
-        message: <Tooltip title="im time">"Im 3rd"</Tooltip>,
-        senderName: "subhan",
-      }),
-      new Message({
-        id: "jk",
-        message: <Tooltip title="im time">"Im 3rd"</Tooltip>,
-        senderName: "subhan",
-      }),
-      new Message({
-        id: 0,
-        message: (
-          <Tooltip title="im time">"I'm you -- the blue bubble!"</Tooltip>
-        ),
-        senderName: "mk",
-      }), // Blue bubble
-      new Message({
-        id: "x",
-        message: (
-          <Tooltip title="im time">
-            "I'm the recipient! (The person you're talking to)"
-          </Tooltip>
-        ),
-        senderName: "ali",
-      }), // Gray bubble
+	// useEffect(() => {
+	// 	setMessages([
+	// 		...messages,
+	// 		props.projChat
+	// 			.filter((chat) => chat._id === props.proj_id)
+	// 			.map((msg) => msg.message)
+	// 			.map(
+	// 				(msg) =>
+	// 					new Message({
+	// 						id: msg.sender_id === props.myId ? 0 : msg.sender_id,
+	// 						message: (
+	// 							<Tooltip
+	// 								title={new Date(msg.timestamp * 1000).toLocaleString()}
+	// 							>
+	// 								{msg.message}
+	// 							</Tooltip>
+	// 						),
+	// 						sender: msg.sender_name,
+	// 					})
+	// 			),
+	// 	]);
+	// }, [props.projChat]);
 
-      new Message({
-        id: "x",
-        message: <Tooltip title="im time">"Im 3rd"</Tooltip>,
-        senderName: "subhan",
-      }),
-      new Message({
-        id: "jk",
-        message: <Tooltip title="im time">"Im 3rd"</Tooltip>,
-        senderName: "subhan",
-      }),
-      new Message({
-        id: 0,
-        message: (
-          <Tooltip title="im time">"I'm you -- the blue bubble!"</Tooltip>
-        ),
-        senderName: "mk",
-      }), // Blue bubble
-    ]
-    //...
-  );
+	useEffect(() => {
+		msgEnd.current.scrollIntoView({ behaviour: "smooth" });
+	});
 
-  return (
-    <>
-      <Scrollbars style={{ height: 470 }}>
-        <ChatFeed
-          messages={messages}
-          showSenderName={true}
-          bubblesCentered={false}
-          bubbleStyles={{
-            text: {
-              fontSize: 12,
-            },
-            chatbubble: {
-              borderRadius: 30,
-              padding: 10,
-            },
-          }}
-        />
-      </Scrollbars>
+	return (
+		<>
+			<Scrollbars style={{ height: 520 }}>
+				<ChatFeed
+					messages={messages}
+					showSenderName={true}
+					bubblesCentered={false}
+					bubbleStyles={{
+						text: {
+							fontSize: 14,
+						},
+						chatbubble: {
+							borderRadius: 30,
+							padding: 10,
+						},
+					}}
+				/>
+				<div ref={msgEnd}></div>
+			</Scrollbars>
 
-      <Input
-        placeholder="type message..."
-        style={{
-          backgroundColor: "#f2f2f0",
-          position: "absolute",
-          bottom: "10px",
-          right: "10px",
-          width: "333px",
-          borderRadius: "10px",
-          borderColor: "#f2f2f0",
-        }}
-      />
-    </>
-  );
+			<Input
+				placeholder={ph}
+				value={msgInput}
+				onChange={(e) => {
+					setMsgInput(e.target.value);
+				}}
+				onKeyPress={(e) => {
+					if (e.charCode === 13) {
+						socket.emit("chat", props.proj_id, {
+							message: msgInput,
+							sender_id: props.myId,
+							sender_name: props.myName,
+							timestamp: parseInt(
+								new Date(Date.now()).getTime() / 1000 + 5 * 3600
+							),
+						});
+						setMsgInput("");
+					}
+				}}
+				style={{
+					backgroundColor: "#f2f2f0",
+					position: "absolute",
+					bottom: "10px",
+					right: "10px",
+					width: "24.5vw",
+					borderRadius: "10px",
+					borderColor: "#f2f2f0",
+				}}
+			/>
+		</>
+	);
 };
 
-export default Chat;
+const mapStateToProps = (state, ownProps) => ({
+	projects: state.projects,
+	projChat: state.projChat,
+	myId: state.bio._id,
+	myName: state.bio.first_name + " " + state.bio.last_name,
+});
+
+export default connect(mapStateToProps, { addProjChat })(Chat);
