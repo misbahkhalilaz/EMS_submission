@@ -16,16 +16,19 @@ const AttendancePanel2 = (props) => {
 	const data = {
 		datasets: [
 			{
-				backgroundColor: ["#1890ff", "red"],
+				backgroundColor: ["#1890ff", "orange", "red"],
 
 				data: [
 					props.attendance.filter((atd) => atd.present === true).length,
-					props.attendance.filter((atd) => atd.present === false).length,
+					props.attendance.filter((atd) => atd.leave === true).length,
+					props.attendance.filter(
+						(atd) => atd.present === false && atd.leave === false
+					).length,
 				],
 			},
 		],
 
-		labels: ["Presents", "Absents"],
+		labels: ["Presents", "Leaves", "Absents"],
 	};
 
 	const data1 = {

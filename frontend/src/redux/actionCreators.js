@@ -11,6 +11,7 @@ import {
 	GOT_BIO,
 	GOT_JOB,
 	GOT_BROADCASTS,
+	CLEAR_STORE,
 } from "./actionTypes";
 
 export const changeIsFetching = () => ({
@@ -71,3 +72,5 @@ export const gotBroadcasts = (broadcasts) => ({
 	type: GOT_BROADCASTS,
 	payload: broadcasts,
 });
+
+export const clearStore = () => ({ type: CLEAR_STORE });

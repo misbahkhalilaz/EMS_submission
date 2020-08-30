@@ -46,12 +46,14 @@ function Bio(props) {
 						props.gotJob(job);
 					})
 			);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
 		<div
 			style={{
 				padding: "15px",
+				height: "45h",
 			}}
 		>
 			<Meta

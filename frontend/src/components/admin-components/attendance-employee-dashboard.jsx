@@ -22,6 +22,7 @@ const EmployeeCurrentAttendance = (props) => {
   }
 }`,
 		}).then((res) => props.gotDailyAtd(res.data.readDailyAtd));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const data = {

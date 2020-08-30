@@ -241,6 +241,19 @@ let getProjEmp = (id) =>
 		collection.find({ other_members: id }).toArray()
 	);
 
+let markTaskComp = ({ _id, assign_date, value }) =>
+	queryDB("projects", (collection) =>
+		collection.updateOne(
+			{ _id: _id, "tasks.assign_date": assign_date },
+			{ $set: { "tasks.$.completed": value } }
+		)
+	);
+
+let addTasks = ({ _id, tasks }) =>
+	queryDB("projects", (collection) =>
+		collection.updateOne({ _id: _id }, { $push: { tasks: { $each: tasks } } })
+	);
+
 module.exports = {
 	queryDB,
 	queryUser,
@@ -261,4 +274,6 @@ module.exports = {
 	getMonthlyAtdEmp,
 	getBroadcasts,
 	getProjEmp,
+	markTaskComp,
+	addTasks,
 };

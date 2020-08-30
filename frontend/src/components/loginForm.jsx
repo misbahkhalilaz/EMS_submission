@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import img from "./loginpage.png";
+import img from "./loginpage.jpg";
 import {
 	Row,
 	Col,
@@ -54,7 +54,13 @@ function LoginForm(props) {
 		<>
 			<Row justify="space-around" align="middle" style={{ minHeight: "100vh" }}>
 				<Col span={17}>
-					<img src={img} width="100%" height="100%"></img>
+					<img
+						src={img}
+						width="100%"
+						height="100%"
+						unselectable="on"
+						draggable="false"
+					></img>
 				</Col>
 				<Col span={6} pull={1} style={{ textAlign: "center" }}>
 					<Title level={3} className="basic-title-color">

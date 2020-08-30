@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Col, Row, Menu, Tooltip, Button } from "antd";
 import {
-	UserOutlined,
 	DashboardOutlined,
 	ProjectOutlined,
 	PayCircleOutlined,
@@ -10,8 +9,10 @@ import {
 	PoweroffOutlined,
 } from "@ant-design/icons";
 import { useCookies } from "react-cookie";
+import { clearStore } from "../../redux/actionCreators";
+import { connect } from "react-redux";
 
-export default function NavBar(props) {
+function NavBar(props) {
 	let [current, setCurrent] = useState("dashboard");
 	let [cookies, setCookie, removeCookie] = useCookies("session");
 	const history = useHistory();
@@ -66,7 +67,12 @@ export default function NavBar(props) {
 							icon={<PoweroffOutlined />}
 							size="small"
 							style={{ float: "right", color: "rgba(0, 0, 0, 0.65)" }}
-							onClick={() => removeCookie("session")}
+							onClick={() => {
+								props.clearStore();
+								console.clear();
+								removeCookie("session");
+								removeCookie("role");
+							}}
 						/>
 					</Tooltip>
 				</Col>
@@ -74,3 +80,5 @@ export default function NavBar(props) {
 		</>
 	);
 }
+
+export default connect(null, { clearStore })(NavBar);

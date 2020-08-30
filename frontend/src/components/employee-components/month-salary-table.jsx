@@ -5,10 +5,9 @@ import { DownOutlined } from "@ant-design/icons";
 import "./month-table-css.css";
 
 const MonthSalaryTable = () => {
-  const now = new Date().getUTCFullYear();
-  const years = Array(now - (now - 20))
-    .fill("")
-    .map((idx) => now - idx);
+  //   let now = new Date().getUTCFullYear() + 1;
+  //   let years = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  //   years = years.map((yr) => (now -= 1));
 
   const monthColumn = [
     {
@@ -72,21 +71,23 @@ const MonthSalaryTable = () => {
     },
   ];
 
-  const menu = (
-    <Menu>
-      {years.map((year) => (
-        <Menu.Item key={year}>{year}</Menu.Item>
-      ))}
-    </Menu>
-  );
+  //   const menu = (
+  //     <span>{new Date().getUTCFullYear()}</span>
+  //     // <Menu>
+  //     //   {years.map((year) => (
+  //     //     <Menu.Item key={year}>{year}</Menu.Item>
+  //     //   ))}
+  //     // </Menu>
+  //   );
 
   return (
     <>
-      <Dropdown className="dropdown-archon" overlay={menu} trigger={["click"]}>
+      {/* <Dropdown className="dropdown-archon" overlay={menu} trigger={["click"]}>
         <a onClick={(e) => e.preventDefault()}>
           {years[0]} <DownOutlined className="dropdown-icon" />
         </a>
-      </Dropdown>
+      </Dropdown> */}
+      <span>{new Date().getUTCFullYear()}</span>
 
       <Table
         showHeader={false}

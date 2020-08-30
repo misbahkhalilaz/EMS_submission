@@ -1,18 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-	Row,
-	Col,
-	Typography,
-	Button,
-	Input,
-	Table,
-	Form,
-	Select,
-	Divider,
-	Modal,
-	message,
-	DatePicker,
-} from "antd";
+import { Row, Col, Typography, Button, Table, Select, message } from "antd";
 import { connect } from "react-redux";
 import { gotMonthlyAtd } from "../redux/actionCreators";
 import callAPI from "../components/callAPI";
@@ -22,7 +9,6 @@ const { Title } = Typography;
 const { Option } = Select;
 
 const AdminEmployee = (props) => {
-	const [employeeView, setEmployeeView] = useState(false);
 	const [tableData, setTableData] = useState();
 	const [cookies] = useCookies("session");
 	let data = props.employees.map((emp) =>

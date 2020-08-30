@@ -21,13 +21,18 @@ const AttendancePanel1 = (props) => {
 				<Col offset={3} span={8}>
 					<label style={{ fontSize: 13 }}>Time</label>
 					<Title level={2}>
-						<Clock format="HH:mm" interval={60000} ticking={true} />
+						<Clock
+							format="hh:mm a"
+							interval={60000}
+							ticking={true}
+							timezone="Asia/Karachi"
+						/>
 					</Title>
 				</Col>
-				<Col span={11}>
+				<Col offset={2} span={9}>
 					<label style={{ color: "#878787", fontSize: 13 }}>Date</label>
 					<Title style={{ color: "#878787" }} level={2}>
-						<Clock format="D MMMM YYYY" interval={8.64e7} ticking={true} />
+						<Clock format="D MM YYYY" interval={8.64e7} ticking={true} />
 					</Title>
 				</Col>
 			</Row>
@@ -36,7 +41,7 @@ const AttendancePanel1 = (props) => {
 					<label style={{ fontSize: 13 }}>Entrance Time</label>
 					<Title level={2}>{props.job.start_time}</Title>
 				</Col>
-				<Col span={11}>
+				<Col offset={2} span={9}>
 					<label style={{ color: "#878787", fontSize: 13 }}>Exit Time</label>
 					<Title style={{ color: "#878787" }} level={2}>
 						{props.job.exit_time}

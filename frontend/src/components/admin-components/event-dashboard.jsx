@@ -30,7 +30,7 @@ const PostEvent = () => {
 						onChange={(e) => {
 							if (e)
 								setDate(
-									parseInt(new Date(e.toDate()).getTime() / 1000 + 5 * 3600)
+									parseInt(new Date(e.toDate()).getTime() / 1000 /*+ 5 * 3600*/)
 								);
 						}}
 					/>

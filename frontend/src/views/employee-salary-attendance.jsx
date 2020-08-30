@@ -45,19 +45,12 @@ const EmployeeSalaryAttendanceTab = () => {
               </Title>
             </Col>
             <Col className="col-display" offset={1} span={8} pull={1}>
-              <Title className="basic-title-color" level={4}>
-                Basic Salary
-              </Title>
-              <Title className="basic-title-value" level={4}>
-                {basicSalary}
-              </Title>
-              <br />
               <Title
                 style={{ color: "#00ff00" }}
                 className="basic-title-"
                 level={4}
               >
-                Bonus
+                Basic Salary
               </Title>
               <Title className="basic-title-value" level={4}>
                 {bonus}
@@ -144,37 +137,6 @@ const EmployeeSalaryAttendanceTab = () => {
           pull={1}
           span={5}
         >
-          <Title
-            className="basic-title-color"
-            level={4}
-            style={{ paddingTop: 0, margin: 0 }}
-          >
-            Bonus Details
-          </Title>
-          <div>
-            <Descriptions
-              className="bonus-descrip-box scrollbar scrollbar-info"
-              bordered
-              colon={false}
-              column={1}
-              size="small"
-            >
-              <Descriptions.Item
-                className="bonus-descrip-box-items"
-                label="UserName
-                Amount"
-              >
-                Z 123212321
-              </Descriptions.Item>
-              <Descriptions.Item
-                className="bonus-descrip-box-items"
-                label="UserName
-                Amount"
-              >
-                Zhou Maomao
-              </Descriptions.Item>
-            </Descriptions>
-          </div>
           <Title
             className="basic-title-color"
             style={{ paddingTop: 0, margin: 0 }}

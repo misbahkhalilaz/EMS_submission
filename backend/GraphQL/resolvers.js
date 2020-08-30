@@ -16,6 +16,8 @@ const {
 	getMonthlyAtdEmp,
 	getBroadcasts,
 	getProjEmp,
+	markTaskComp,
+	addTasks,
 } = require("../DB/queries");
 
 let create_employee = (args, req) => {
@@ -42,11 +44,7 @@ let read_jobs = (args, req) => {
 	} else throw "access denied for " + req.token_data.role;
 };
 
-let read_employees = (args, req) => {
-	if (req.token_data.role === "department") {
-		return getEmployees();
-	} else throw "access denied for " + req.token_data.role;
-};
+let read_employees = (args, req) => getEmployees();
 
 let read_projects = (args, req) => {
 	if (req.token_data.role === "department") {
@@ -97,6 +95,11 @@ let read_broadcast = (args, req) => getBroadcasts();
 
 let read_proj_emp = (args, req) => getProjEmp(req.token_data.userid);
 
+let mark_task_comp = (args, req) =>
+	markTaskComp(args).then((res) => res.result.n);
+
+let add_tasks = (args, req) => addTasks(args).then((res) => res.result.n);
+
 const resolver = (req) => ({
 	createEmployee: (args) => create_employee(args, req),
 	createJob: (args) => create_job(args, req),
@@ -115,6 +118,8 @@ const resolver = (req) => ({
 	readMonthlyAtdEmp: (args) => read_monthly_atd_emp(args, req),
 	readBroadcast: (args) => read_broadcast(args, req),
 	readProjEmp: (args) => read_proj_emp(args, req),
+	markTaskComp: (args) => mark_task_comp(args, req),
+	addTasks: (args) => add_tasks(args, req),
 });
 
 module.exports = { resolver };

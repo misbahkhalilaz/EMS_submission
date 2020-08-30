@@ -234,4 +234,3 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 export default connect(mapStateToProps, { gotJobs })(AdminJobs);
-function updateJob() {}

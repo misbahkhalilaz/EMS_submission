@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "antd/dist/antd.css";
 import { Row, Col } from "antd";
@@ -9,10 +9,31 @@ import EmployeeDashboard from "../views/employee-dashboard";
 import EmployeeSalaryAttendanceTab from "../views/employee-salary-attendance";
 import EmployeeProjectTab from "../views/employee-projects";
 import EmployeeContactTab from "../views/employee-contact-admin";
+import { gotEmployees } from "../redux/actionCreators";
+import { connect } from "react-redux";
+import callAPI from "../components/callAPI";
+import { useCookies } from "react-cookie";
 
-function Employee() {
+function Employee(props) {
 	console.log(parseInt(new Date(Date.now()).getTime() / 1000 + 5 * 3600));
 	console.log(new Date(1597005599 * 1000));
+	const [cookies] = useCookies("session");
+	const getEmployees = () => {
+		callAPI(cookies.session, {
+			query: `query{
+		  readEmployees{
+		  	_id
+			first_name
+			last_name
+		}
+	}`,
+		}).then((res) => props.gotEmployees(res.data.readEmployees));
+	};
+
+	useEffect(() => {
+		getEmployees();
+	}, []);
+
 	return (
 		<>
 			<Row style={{ backgroundColor: "#f2f2f0" }}>
@@ -51,4 +72,4 @@ function Employee() {
 	);
 }
 
-export default Employee;
+export default connect(null, { gotEmployees })(Employee);
